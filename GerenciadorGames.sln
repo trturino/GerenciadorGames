@@ -21,25 +21,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{C1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Emprestimo", "Emprestimo", "{3A594D4F-1F53-46EE-98F7-0C52D4FAB9E8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Amigo.API", "src\Services\Amigo\Amigo.API\Amigo.API.csproj", "{1D6CB65C-F34F-4369-89F7-E29BB5766A51}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amigo.API", "src\Services\Amigo\Amigo.API\Amigo.API.csproj", "{1D6CB65C-F34F-4369-89F7-E29BB5766A51}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emprestimo.API", "src\Services\Emprestimo\Emprestimo.API\Emprestimo.API.csproj", "{76F38E3F-77D0-4673-83AC-44556E7CD59E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emprestimo.API", "src\Services\Emprestimo\Emprestimo.API\Emprestimo.API.csproj", "{76F38E3F-77D0-4673-83AC-44556E7CD59E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Game.API", "src\Services\Game\Game.API\Game.API.csproj", "{A51EB3D1-C8C4-4D35-851C-AF60A643560C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.API", "src\Services\Game\Game.API\Game.API.csproj", "{A51EB3D1-C8C4-4D35-851C-AF60A643560C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.API", "src\Services\Identity\Identity.API\Identity.API.csproj", "{537161FA-A165-4D73-A851-9B4017D2279B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.API", "src\Services\Identity\Identity.API\Identity.API.csproj", "{537161FA-A165-4D73-A851-9B4017D2279B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emprestimo.Domain", "src\Services\Emprestimo\Emprestimo.Domain\Emprestimo.Domain.csproj", "{A72ACE7F-6869-40EA-A128-7FA8DAC80B39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emprestimo.Domain", "src\Services\Emprestimo\Emprestimo.Domain\Emprestimo.Domain.csproj", "{A72ACE7F-6869-40EA-A128-7FA8DAC80B39}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emprestimo.Infra", "src\Services\Emprestimo\Emprestimo.Infra\Emprestimo.Infra.csproj", "{1BFB1646-057E-44F0-AEDA-F86F6EA72F8C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emprestimo.Infra", "src\Services\Emprestimo\Emprestimo.Infra\Emprestimo.Infra.csproj", "{1BFB1646-057E-44F0-AEDA-F86F6EA72F8C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{1D6D197D-E265-462A-914D-A2FD09AE8069}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "tests\Services\UnitTest\UnitTest.csproj", "{44FEFA1C-4FC2-4D83-8446-F74091A8B41C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "tests\Services\UnitTest\UnitTest.csproj", "{44FEFA1C-4FC2-4D83-8446-F74091A8B41C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunctionalTest", "tests\Services\FunctionalTest\FunctionalTest.csproj", "{A76CAFFB-518A-4872-B65C-94888DEC0259}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionalTest", "tests\Services\FunctionalTest\FunctionalTest.csproj", "{A76CAFFB-518A-4872-B65C-94888DEC0259}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebMVC", "src\Web\WebMVC\WebMVC.csproj", "{A1F8EC6D-9F69-4BCA-93F3-BC1FD8E8E636}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMVC", "src\Web\WebMVC\WebMVC.csproj", "{A1F8EC6D-9F69-4BCA-93F3-BC1FD8E8E636}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

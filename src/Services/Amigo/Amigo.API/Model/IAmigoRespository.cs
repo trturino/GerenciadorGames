@@ -14,6 +14,6 @@ namespace trturino.GerenciadorGames.Services.API.Model
 
         Task<Amigo> UpdateAmigoAsync(Amigo amigo);
 
-        Task<bool> DeleteAmigoAsync(string id);
+        Task<bool> DeleteAmigoAsync(int id);
     }
 }
