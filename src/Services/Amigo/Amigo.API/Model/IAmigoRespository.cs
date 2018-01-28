@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace trturino.GerenciadorGames.Services.API.Model
@@ -7,7 +8,7 @@ namespace trturino.GerenciadorGames.Services.API.Model
     {
         Task<Amigo> GetAmigoAsync(int id);
 
-        Task<Amigo> GetTodosAmigosAsync();
+        Task<IEnumerable<Amigo>> GetTodosAmigosAsync();
 
         Task<Amigo> AddAmigoAsync(Amigo amigo);
 

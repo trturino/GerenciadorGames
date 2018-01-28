@@ -5,7 +5,9 @@ services:
     image: webmvc
     build:
       context: .
-      dockerfile: ../WebMVC/Dockerfile
+      dockerfile: src/Web/WebMVC/Dockerfile
+    depends_on:
+      - sql.data
 
   amigo.api:
     image: amigo.api
@@ -33,4 +35,7 @@ services:
     build:
       context: .
       dockerfile: src/Services/Identity/Identity.API/Dockerfile
+
+  sql.data:
+    image: microsoft/mssql-server-linux:2017-latest
 
