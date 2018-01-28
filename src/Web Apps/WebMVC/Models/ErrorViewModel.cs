@@ -1,6 +1,4 @@
-using System;
-
-namespace WebMVC.Models
+namespace trturino.GerenciadorGames.WebApps.WebMVC.Models
 {
     public class ErrorViewModel
     {

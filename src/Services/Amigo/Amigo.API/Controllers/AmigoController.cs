@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
-using Amigo.API.Model;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using trturino.GerenciadorGames.Services.API.Model;
 
-namespace Amigo.API.Controllers
+namespace trturino.GerenciadorGames.Services.API.Controllers
 {
     [Produces("application/json")]
     [Route("api/v1/[controller]")]
@@ -24,5 +22,13 @@ namespace Amigo.API.Controllers
         }
 
         [HttpGet]
+        [Route("action")]
+        [ProducesResponseType(typeof(List<Amigo>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Get()
+        {
+            var itens = await _amigoRespository.GetTodosAmigosAsync();
+
+            return Ok(itens);
+        }
     }
 }

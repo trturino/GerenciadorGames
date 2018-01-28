@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <DockerComposeProjectPath>..\GerenciadorGames\docker-compose.dcproj</DockerComposeProjectPath>
+    <AssemblyName>trturino.GerenciadorGames.WebApps.WebMVC</AssemblyName>
+    <RootNamespace>trturino.GerenciadorGames.WebApps.WebMVC</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

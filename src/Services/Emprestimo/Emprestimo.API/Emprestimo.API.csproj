@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <DockerComposeProjectPath>..\..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
+    <AssemblyName>trturino.GerenciadorGames.Services.Emprestimo.API</AssemblyName>
+    <RootNamespace>trturino.GerenciadorGames.Services.Emprestimo.API</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

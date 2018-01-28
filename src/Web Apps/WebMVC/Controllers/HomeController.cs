@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using WebMVC.Models;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using trturino.GerenciadorGames.WebApps.WebMVC.Models;
 
-namespace WebMVC.Controllers
+namespace trturino.GerenciadorGames.WebApps.WebMVC.Controllers
 {
     public class HomeController : Controller
     {

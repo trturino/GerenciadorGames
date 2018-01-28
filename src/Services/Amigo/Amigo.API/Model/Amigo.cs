@@ -1,16 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Amigo.API.Model
+namespace trturino.GerenciadorGames.Services.API.Model
 {
     public class Amigo : IValidatableObject
     {
-        public Guid Id { get; set; }
+        public Amigo(int id, string nome, string telefone)
+        {
+            Id = id;
+            Nome = nome;
+            Telefone = telefone;
+        }
 
-        public string Nome { get; set; }
+        protected Amigo()
+        {
+        }
 
-        public string Telefone { get; set; }
+        public int Id { get; private set; }
+
+        public string Nome { get; private set; }
+
+        public string Telefone { get; private set; }
+
+        public Amigo SetTelefone(string telefone)
+        {
+            Telefone = telefone;
+            return this;
+        }
+
+        public Amigo SetNome(string nome)
+        {
+            Nome = nome;
+            return this;
+        }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -18,7 +40,7 @@ namespace Amigo.API.Model
 
             if (string.IsNullOrEmpty(Nome))
             {
-                resultados.Add(new ValidationResult("O nome é obrigatório", new []{nameof(Nome) }));
+                resultados.Add(new ValidationResult("O nome é obrigatório", new[] { nameof(Nome) }));
             }
 
             return resultados;

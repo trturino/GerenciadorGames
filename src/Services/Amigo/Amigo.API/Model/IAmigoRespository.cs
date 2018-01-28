@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Amigo.API.Model
+namespace trturino.GerenciadorGames.Services.API.Model
 {
     public interface IAmigoRespository
     {
-        Task<Amigo> GetAmigoAsync(Guid id);
+        Task<Amigo> GetAmigoAsync(int id);
+
+        Task<Amigo> GetTodosAmigosAsync();
 
         Task<Amigo> AddAmigoAsync(Amigo amigo);
 

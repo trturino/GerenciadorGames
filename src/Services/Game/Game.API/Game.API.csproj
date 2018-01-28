@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>trturino.GerenciadorGames.Services.Game.API</AssemblyName>
+    <RootNamespace>trturino.GerenciadorGames.Services.Game.API</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
