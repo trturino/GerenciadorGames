@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  webmvc:
+    image: webmvc
+    build:
+      context: .
+      dockerfile: ../WebMVC/Dockerfile
+
+  amigo.api:
+    image: amigo.api
+    build:
+      context: .
+      dockerfile: src/Services/Emprestimo/Amigo.API/Dockerfile
+
+
+  emprestimo.api:
+    image: emprestimo.api
+    build:
+      context: .
+      dockerfile: src/Services/Emprestimo/Emprestimo.API/Dockerfile
+
+
+  game.api:
+    image: game.api
+    build:
+      context: .
+      dockerfile: Gsrc/Services/Emprestimo/Game.API/Dockerfile
+
+
+  identity.api:
+    image: identity.api
+    build:
+      context: .
+      dockerfile: src/Services/Identity/Identity.API/Dockerfile
+
