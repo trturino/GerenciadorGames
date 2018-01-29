@@ -1,18 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace trturino.GerenciadorGames.Services.Game.API.Model
 {
     public class Game : IValidatableObject
     {
-        public Game(int id, string nome)
+        public Game(int id, string nome, bool disponivel)
         {
             Id = id;
             Nome = nome;
+            Disponivel = disponivel;
         }
 
-        protected Game() { }
+        protected Game()
+        {
+        }
 
         public int Id
         {
@@ -32,12 +34,14 @@ namespace trturino.GerenciadorGames.Services.Game.API.Model
             return this;
         }
 
+        public bool Disponivel { get; set; }
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var resultados = new List<ValidationResult>();
             if (string.IsNullOrEmpty(Nome))
             {
-                resultados.Add(new ValidationResult("O nome é obrigatório", 
+                resultados.Add(new ValidationResult("O nome é obrigatório",
                                                     new[] { nameof(Nome) }));
             }
 
