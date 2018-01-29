@@ -5,6 +5,9 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
+      - AmigoUrl=http://amigo.api
+      - EmprestimoUrl=http://emprestimo.api
+      - GameUrl=http://game.api
     ports:
       - "5000:80"
 

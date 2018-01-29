@@ -1,22 +1,42 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using trturino.GerenciadorGames.WebApps.WebMVC.Infrastructure;
 using trturino.GerenciadorGames.WebApps.WebMVC.Models;
 
 namespace trturino.GerenciadorGames.WebApps.WebMVC.Services
 {
     public class GameService : IGameService
     {
-        private static List<GameViewModel> _games;
+        private readonly IOptionsSnapshot<AppSettings> _settings;
+        private readonly string _enderecoRemoto;
+        private readonly IHttpClient _apiClient;
+        private readonly IHttpContextAccessor _httpContextAccesor;
 
-        public GameService()
+        public GameService(
+            IOptionsSnapshot<AppSettings> settings,
+            IHttpClient apiClient
+        )
         {
-            _games = _games ?? GetList();
+            _settings = settings;
+            _enderecoRemoto = $"{_settings.Value.GameUrl}/api/v1/game/";
+            _apiClient = apiClient;
         }
 
-        public Task<GameViewModel> Add(GameViewModel model)
+        public async Task<GameViewModel> Add(GameViewModel model)
         {
-            return Task.FromResult(model);
+            var amigoUrl = API.Game.PostGame(_enderecoRemoto);
+
+            //var authorizationToken = await GetUserTokenAsync();
+            var dados = await _apiClient.GetStringAsync(amigoUrl);
+
+            var response = JsonConvert.DeserializeObject<GameViewModel>(dados);
+
+            return response;
         }
 
         public Task<bool> Delete(int id)
@@ -24,32 +44,58 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Services
             return Task.FromResult(true);
         }
 
-        public Task<IEnumerable<GameViewModel>> GetGamesDisponiveis()
+        public async Task<IEnumerable<GameViewModel>> GetGamesDisponiveis()
         {
-            return Task.FromResult(_games.Where(x => x.Disponivel));
+            var amigoUrl = API.Game.GetDisponiveis(_enderecoRemoto);
+
+            //var authorizationToken = await GetUserTokenAsync();
+            var dataString = await _apiClient.GetStringAsync(amigoUrl);
+
+            var response = JsonConvert.DeserializeObject<IEnumerable<GameViewModel>>(dataString);
+
+            return response;
         }
 
-        public Task<GameViewModel> Edit(GameViewModel model)
+        public async Task<GameViewModel> Edit(GameViewModel model)
         {
-            return Task.FromResult(model);
+            var amigoUrl = API.Game.PostGame(_enderecoRemoto);
+
+            //var authorizationToken = await GetUserTokenAsync();
+            var dados = await _apiClient.GetStringAsync(amigoUrl);
+
+            var response = JsonConvert.DeserializeObject<GameViewModel>(dados);
+
+            return response;
         }
 
-        public Task<IEnumerable<GameViewModel>> GetAll()
+        public async Task<IEnumerable<GameViewModel>> GetAll()
         {
-            return Task.FromResult((IEnumerable<GameViewModel>)_games);
+            var amigoUrl = API.Game.GetGame(_enderecoRemoto);
+
+            //var authorizationToken = await GetUserTokenAsync();
+            var dataString = await _apiClient.GetStringAsync(amigoUrl);
+
+            var response = JsonConvert.DeserializeObject<IEnumerable<GameViewModel>>(dataString);
+
+            return response;
         }
 
-        public Task<GameViewModel> GetById(int id)
+        public async Task<GameViewModel> GetById(int id)
         {
-            return Task.FromResult(_games.FirstOrDefault(x => x.Id == id));
+            var amigoUrl = API.Game.GetGameById(_enderecoRemoto, id);
+
+            //var authorizationToken = await GetUserTokenAsync();
+            var dataString = await _apiClient.GetStringAsync(amigoUrl);
+
+            var response = JsonConvert.DeserializeObject<GameViewModel>(dataString);
+
+            return response;
         }
 
-        private List<GameViewModel> GetList() => new List<GameViewModel>
+        private async Task<string> GetUserTokenAsync()
         {
-            new GameViewModel { Id = 1, Nome = "Game 1", Disponivel = true },
-            new GameViewModel { Id = 2, Nome = "Game 2", Disponivel = false },
-            new GameViewModel { Id = 3, Nome = "Game 3", Disponivel = true },
-            new GameViewModel { Id = 4, Nome = "Game 4", Disponivel = false }
-        };
+            var context = _httpContextAccesor.HttpContext;
+            return await context.GetTokenAsync("access_token");
+        }
     }
 }

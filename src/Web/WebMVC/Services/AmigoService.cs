@@ -1,23 +1,41 @@
-﻿using System;
+﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using trturino.GerenciadorGames.WebApps.WebMVC.Infrastructure;
 using trturino.GerenciadorGames.WebApps.WebMVC.Models;
 
 namespace trturino.GerenciadorGames.WebApps.WebMVC.Services
 {
     public class AmigoService : IAmigoService
     {
-        private static List<AmigoViewModel> _amigos;
+        private readonly IOptionsSnapshot<AppSettings> _settings;
+        private readonly string _enderecoRemoto;
+        private readonly IHttpClient _apiClient;
+        private readonly IHttpContextAccessor _httpContextAccesor;
 
-        public AmigoService()
+        public AmigoService(
+            IOptionsSnapshot<AppSettings> settings,
+            IHttpClient apiClient
+            )
         {
-            _amigos = _amigos ?? GetList();
+            _settings = settings;
+            _enderecoRemoto = $"{_settings.Value.AmigoUrl}/api/v1/amigo/";
+            _apiClient = apiClient;
         }
 
-        public Task<AmigoViewModel> Add(AmigoViewModel model)
+        public async Task<AmigoViewModel> Add(AmigoViewModel model)
         {
-            return Task.FromResult(model);
+            var amigoUrl = API.Amigo.PostAmigo(_enderecoRemoto);
+
+            //var authorizationToken = await GetUserTokenAsync();
+            var dados = await _apiClient.GetStringAsync(amigoUrl);
+
+            var response = JsonConvert.DeserializeObject<AmigoViewModel>(dados);
+
+            return response;
         }
 
         public Task<bool> Delete(int id)
@@ -25,28 +43,46 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Services
             return Task.FromResult(true);
         }
 
-        public Task<AmigoViewModel> Edit(AmigoViewModel model)
+        public async Task<AmigoViewModel> Edit(AmigoViewModel model)
         {
-            return Task.FromResult(model);
+            var amigoUrl = API.Amigo.PutAmigo(_enderecoRemoto);
+
+            //var authorizationToken = await GetUserTokenAsync();
+            var dados = await _apiClient.GetStringAsync(amigoUrl);
+
+            var response = JsonConvert.DeserializeObject<AmigoViewModel>(dados);
+
+            return response;
         }
 
-        public Task<IEnumerable<AmigoViewModel>> GetAll()
+        public async Task<IEnumerable<AmigoViewModel>> GetAll()
         {
-            return Task.FromResult((IEnumerable<AmigoViewModel>)_amigos);
+            var amigoUrl = API.Amigo.GetAmigo(_enderecoRemoto);
+
+            //var authorizationToken = await GetUserTokenAsync();
+            var dataString = await _apiClient.GetStringAsync(amigoUrl);
+
+            var response = JsonConvert.DeserializeObject<IEnumerable<AmigoViewModel>>(dataString);
+
+            return response;
         }
 
-        public Task<AmigoViewModel> GetById(int id)
+        public async Task<AmigoViewModel> GetById(int id)
         {
-            return Task.FromResult(_amigos.FirstOrDefault(x => x.Id == id));
+            var amigoUrl = API.Amigo.GetAmigoById(_enderecoRemoto, id);
+
+            //var authorizationToken = await GetUserTokenAsync();
+            var dataString = await _apiClient.GetStringAsync(amigoUrl);
+
+            var response = JsonConvert.DeserializeObject<AmigoViewModel>(dataString);
+
+            return response;
         }
 
-        private List<AmigoViewModel> GetList() => new List<AmigoViewModel>
+        private async Task<string> GetUserTokenAsync()
         {
-            new AmigoViewModel { Id = 1, Nome = "Amigo 1", Telefone = "111" },
-            new AmigoViewModel { Id = 2, Nome = "Amigo 2", Telefone = "222" },
-            new AmigoViewModel { Id = 3, Nome = "Amigo 3", Telefone = "333" },
-            new AmigoViewModel { Id = 4, Nome = "Amigo 4", Telefone = "444" }
-        };
-
+            var context = _httpContextAccesor.HttpContext;
+            return await context.GetTokenAsync("access_token");
+        }
     }
 }

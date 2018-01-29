@@ -2,22 +2,44 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using trturino.GerenciadorGames.WebApps.WebMVC.Infrastructure;
 using trturino.GerenciadorGames.WebApps.WebMVC.Models;
 
 namespace trturino.GerenciadorGames.WebApps.WebMVC.Services
 {
     public class EmprestimoService : IEmprestimoService
     {
-        private static List<EmprestimoViewModel> _emprestimos;
+        private readonly IOptionsSnapshot<AppSettings> _settings;
+        private readonly string _enderecoRemoto;
+        private readonly IHttpClient _apiClient;
+        private readonly IHttpContextAccessor _httpContextAccesor;
 
-        public EmprestimoService()
+        public EmprestimoService(
+            IOptionsSnapshot<AppSettings> settings,
+            IHttpClient apiClient,
+            IHttpContextAccessor httpContextAccesor
+        )
         {
-            _emprestimos = _emprestimos ?? GetList();
+            _settings = settings;
+            _enderecoRemoto = $"{_settings.Value.EmprestimoUrl}/api/v1/emprestimo/";
+            _apiClient = apiClient;
+            _httpContextAccesor = httpContextAccesor ?? throw new ArgumentNullException(nameof(httpContextAccesor));
         }
 
-        public Task<EmprestimoViewModel> Add(EmprestimoViewModel model)
+        public async Task<EmprestimoViewModel> Add(EmprestimoViewModel model)
         {
-            return Task.FromResult(model);
+            var amigoUrl = API.Emprestimo.PostEmprestimo(_enderecoRemoto);
+
+            //var authorizationToken = await GetUserTokenAsync();
+            var dados = await _apiClient.GetStringAsync(amigoUrl);
+
+            var response = JsonConvert.DeserializeObject<EmprestimoViewModel>(dados);
+
+            return response;
         }
 
         public Task<bool> Delete(int id)
@@ -25,24 +47,52 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Services
             return Task.FromResult(true);
         }
 
-        public Task<EmprestimoViewModel> Edit(EmprestimoViewModel model)
+        public async Task<EmprestimoViewModel> Edit(EmprestimoViewModel model)
         {
-            return Task.FromResult(model);
+            var amigoUrl = API.Emprestimo.PutEmprestimo(_enderecoRemoto);
+
+            //var authorizationToken = await GetUserTokenAsync();
+            var dados = await _apiClient.GetStringAsync(amigoUrl);
+
+            var response = JsonConvert.DeserializeObject<EmprestimoViewModel>(dados);
+
+            return response;
         }
 
-        public Task<IEnumerable<EmprestimoViewModel>> GetAll()
+        public async Task<IEnumerable<EmprestimoViewModel>> GetAll()
         {
-            return Task.FromResult((IEnumerable<EmprestimoViewModel>)_emprestimos);
+            var amigoUrl = API.Emprestimo.GetEmprestimo(_enderecoRemoto);
+
+            //var authorizationToken = await GetUserTokenAsync();
+            var dataString = await _apiClient.GetStringAsync(amigoUrl);
+
+            var response = JsonConvert.DeserializeObject<IEnumerable<EmprestimoViewModel>>(dataString);
+
+            return response;
         }
 
-        public Task<IEnumerable<EmprestimoViewModel>> GetAllByAmigo(int idAmigo)
+        public async Task<IEnumerable<EmprestimoViewModel>> GetAllByAmigo(int idAmigo)
         {
-            return Task.FromResult(_emprestimos.Where(x => x.AmigoId == idAmigo));
+            var amigoUrl = API.Emprestimo.GetEmprestimoByAmigoId(_enderecoRemoto, idAmigo);
+
+            //var authorizationToken = await GetUserTokenAsync();
+            var dataString = await _apiClient.GetStringAsync(amigoUrl);
+
+            var response = JsonConvert.DeserializeObject<IEnumerable<EmprestimoViewModel>>(dataString);
+
+            return response;
         }
 
-        public Task<IEnumerable<EmprestimoViewModel>> GetAllByGame(int idGame)
+        public async Task<IEnumerable<EmprestimoViewModel>> GetAllByGame(int idGame)
         {
-            return Task.FromResult(_emprestimos.Where(x => x.GameId == idGame));
+            var amigoUrl = API.Emprestimo.GetEmprestimoByGameId(_enderecoRemoto, idGame);
+
+            //var authorizationToken = await GetUserTokenAsync();
+            var dataString = await _apiClient.GetStringAsync(amigoUrl);
+
+            var response = JsonConvert.DeserializeObject<IEnumerable<EmprestimoViewModel>>(dataString);
+
+            return response;
         }
 
         public Task Devolver(int idEmprestimo)
@@ -50,17 +100,23 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Services
             return Task.CompletedTask;
         }
 
-        public Task<EmprestimoViewModel> GetById(int id)
+        public async Task<EmprestimoViewModel> GetById(int id)
         {
-            return Task.FromResult(_emprestimos.FirstOrDefault(x => x.Id == id));
+            var amigoUrl = API.Emprestimo.GetEmprestimoById(_enderecoRemoto, id);
+
+            //var authorizationToken = await GetUserTokenAsync();
+            var dataString = await _apiClient.GetStringAsync(amigoUrl);
+
+            var response = JsonConvert.DeserializeObject<EmprestimoViewModel>(dataString);
+
+            return response;
         }
 
-        private List<EmprestimoViewModel> GetList() => new List<EmprestimoViewModel>
+        private async Task<string> GetUserTokenAsync()
         {
-            new EmprestimoViewModel { Id = 1, AmigoId = 1, AmigoNome = "Amigo 1", GameId=1, GameNome = "Game 1", Devolvido = false, DataDoEmprestimo = DateTime.Now },
-            new EmprestimoViewModel { Id = 2, AmigoId = 2, AmigoNome = "Amigo 2", GameId=2, GameNome = "Game 2", Devolvido = true, DataDoEmprestimo = DateTime.Now },
-            new EmprestimoViewModel { Id = 3, AmigoId = 3, AmigoNome = "Amigo 3", GameId=3, GameNome = "Game 3", Devolvido = false, DataDoEmprestimo = DateTime.Now },
-            new EmprestimoViewModel { Id = 4, AmigoId = 4, AmigoNome = "Amigo 4", GameId=4, GameNome = "Game 4", Devolvido = true, DataDoEmprestimo = DateTime.Now }
-        };
+            var context = _httpContextAccesor.HttpContext;
+            return await context.GetTokenAsync("access_token");
+        }
+
     }
 }
