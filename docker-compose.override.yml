@@ -4,33 +4,44 @@ services:
   webmvc:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "80"
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - "5000:80"
 
   amigo.api:
     environment:
+      - ConnectionString=${ESHOP_AZURE_CATALOG_DB:-Server=sql.data;Database=Microsoft.eShopOnContainers.Services.CatalogDb;User Id=sa;Password=Pass@word}
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - "80"
+      - "5001:80"
 
 
   emprestimo.api:
     environment:
+      - ConnectionString=${ESHOP_AZURE_CATALOG_DB:-Server=sql.data;Database=Microsoft.eShopOnContainers.Services.CatalogDb;User Id=sa;Password=Pass@word}
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - "80"
+      - "5002:80"
 
 
   game.api:
     environment:
+      - ConnectionString=${ESHOP_AZURE_CATALOG_DB:-Server=sql.data;Database=Microsoft.eShopOnContainers.Services.CatalogDb;User Id=sa;Password=Pass@word}
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - "80"
+      - "5003:80"
 
 
   identity.api:
     environment:
+      - ConnectionString=${ESHOP_AZURE_CATALOG_DB:-Server=sql.data;Database=Microsoft.eShopOnContainers.Services.CatalogDb;User Id=sa;Password=Pass@word}
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - "80"
+      - "5004:80"
+
+  sql.data:
+    environment:
+        - SA_PASSWORD=Pass@word
+        - ACCEPT_EULA=Y
+    ports:
+      - "5433:1433"
 
