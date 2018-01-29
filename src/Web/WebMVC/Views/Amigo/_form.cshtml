@@ -1,0 +1,19 @@
+﻿@model trturino.GerenciadorGames.WebApps.WebMVC.Models.AmigoViewModel
+<div asp-validation-summary="ModelOnly" class="box"></div>
+<div class="row uniform">
+    <div class="6u 12u$(xsmall)">
+        <input asp-for="Nome" placeholder="Nome" />
+        <span asp-validation-for="Nome" class="code"></span>
+    </div>
+    <div class="6u$ 12u$(xsmall)">
+        <input asp-for="Telefone" placeholder="Telefone" />
+        <span asp-validation-for="Telefone" class="code"></span>
+    </div>
+                    
+    <!-- Break -->
+    <div class="12u$">
+        <ul class="actions">
+            <li><input type="submit" value="Salvar" class="special" /></li>
+        </ul>
+    </div>
+</div>

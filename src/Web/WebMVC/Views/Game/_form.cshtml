@@ -1,0 +1,15 @@
+﻿@model trturino.GerenciadorGames.WebApps.WebMVC.Models.GameViewModel
+<div asp-validation-summary="ModelOnly" class="box"></div>
+<div class="row uniform">
+    <div class="6u 12u$(xsmall)">
+        <input asp-for="Nome" placeholder="Nome" />
+        <span asp-validation-for="Nome" class="code"></span>
+    </div>
+
+    <!-- Break -->
+    <div class="12u$">
+        <ul class="actions">
+            <li><input type="submit" value="Salvar" class="special" /></li>
+        </ul>
+    </div>
+</div>

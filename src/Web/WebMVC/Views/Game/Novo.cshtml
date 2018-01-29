@@ -1,0 +1,21 @@
+﻿@model trturino.GerenciadorGames.WebApps.WebMVC.Models.GameViewModel
+@{
+    ViewData["Titulo"] = "Novo game";
+}
+<header id="header">
+    <a href="#" class="logo"><strong>Novo</strong></a>
+</header>
+<section>
+    <div class="row 200%">
+        <div class="6u$ 12u$(medium)">
+            <form method="post" asp-action="Novo">
+                @Html.Partial("_form")
+            </form>
+        </div>
+    </div>
+
+</section>
+
+<div>
+    <a asp-action="Index" class="button">Voltar a lista</a>
+</div>

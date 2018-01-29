@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using trturino.GerenciadorGames.WebApps.WebMVC.Models;
@@ -51,10 +52,10 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Services
 
         private List<EmprestimoViewModel> GetList() => new List<EmprestimoViewModel>
         {
-            new EmprestimoViewModel { Id = 1, AmigoId = 1, AmigoNome = "Amigo 1", GameId=1, GameNome = "Game 1" },
-            new EmprestimoViewModel { Id = 2, AmigoId = 2, AmigoNome = "Amigo 2", GameId=2, GameNome = "Game 2" },
-            new EmprestimoViewModel { Id = 3, AmigoId = 3, AmigoNome = "Amigo 3", GameId=3, GameNome = "Game 3" },
-            new EmprestimoViewModel { Id = 4, AmigoId = 4, AmigoNome = "Amigo 4", GameId=4, GameNome = "Game 4" }
+            new EmprestimoViewModel { Id = 1, AmigoId = 1, AmigoNome = "Amigo 1", GameId=1, GameNome = "Game 1", Devolvido = false, DataDoEmprestimo = DateTime.Now },
+            new EmprestimoViewModel { Id = 2, AmigoId = 2, AmigoNome = "Amigo 2", GameId=2, GameNome = "Game 2", Devolvido = true, DataDoEmprestimo = DateTime.Now },
+            new EmprestimoViewModel { Id = 3, AmigoId = 3, AmigoNome = "Amigo 3", GameId=3, GameNome = "Game 3", Devolvido = false, DataDoEmprestimo = DateTime.Now },
+            new EmprestimoViewModel { Id = 4, AmigoId = 4, AmigoNome = "Amigo 4", GameId=4, GameNome = "Game 4", Devolvido = true, DataDoEmprestimo = DateTime.Now }
         };
     }
 }

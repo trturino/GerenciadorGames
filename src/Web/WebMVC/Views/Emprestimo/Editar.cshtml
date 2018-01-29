@@ -1,0 +1,22 @@
+﻿@using trturino.GerenciadorGames.WebApps.WebMVC.Models
+@model EmprestimoFormViewModel
+@{
+    ViewData["Titulo"] = "Editar emprestimo";
+}
+<header id="header">
+    <a href="#" class="logo"><strong>Editar</strong></a>
+</header>
+<section>
+    <div class="row 200%">
+        <div class="6u$ 12u$(medium)">
+            <form method="post" asp-action="Editar">
+                @Html.Partial("_form")
+            </form>
+        </div>
+    </div>
+
+</section>
+
+<div>
+    <a asp-action="Index" class="button">Voltar a lista</a>
+</div>

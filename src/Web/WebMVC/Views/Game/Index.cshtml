@@ -1,0 +1,30 @@
+﻿@using trturino.GerenciadorGames.WebApps.WebMVC.Models
+@model IEnumerable<GameViewModel>
+@{
+    ViewData["Titulo"] = "Games";
+}
+<!-- Header -->
+<header id="header">
+    <a href="#" class="logo"><strong>Games</strong></a>
+    <ul class="icons">
+        <li><a asp-action="Novo" class="icon fa-plus"><span class="label">Adicionar</span></a></li>
+    </ul>
+</header>
+<section>
+    <div class="features">
+        @foreach (var gameViewModel in Model)
+        {
+            <article>
+                <span class="icon fa-gamepad"></span>
+                <div class="content">
+                    <h3>@gameViewModel.Nome</h3>
+                    <p><input type="checkbox" @(gameViewModel.Disponivel ? "checked" : "") class="disabled"/><label>Disponível</label></p>
+                    <ul class="actions">
+                        <li><a href="@Url.Action("Editar", "Game", new {gameViewModel.Id})" class="button small">Editar</a></li>
+                    </ul>
+                </div>
+                
+            </article>
+        }
+    </div>
+</section>

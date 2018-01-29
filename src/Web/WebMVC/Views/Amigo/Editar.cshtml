@@ -1,0 +1,29 @@
+﻿@model trturino.GerenciadorGames.WebApps.WebMVC.Models.AmigoViewModel
+@{
+    ViewData["Titulo"] = "Editar amigo";
+}
+<header id="header">
+    <a href="#" class="logo"><strong>Editar</strong></a>
+</header>
+<section>
+    <div class="row 200%">
+        <div class="6u$ 12u$(medium)">
+            <form method="post" asp-action="Editar">
+                @Html.Partial("_form")
+            </form>
+        </div>
+    </div>
+
+    <div class="6u 12u$(small)">
+        <h4>Games com ele</h4>
+        <ul class="alt">
+            <li>Dolor etiam magna etiam. <a class="button small">Devolver</a></li>
+            <li>Dolor etiam magna etiam. <a class="button small disabled">Devolver</a></li>
+            <li>Dolor etiam magna etiam. <a class="button small">Devolver</a></li>
+        </ul>
+    </div>
+</section>
+
+<div>
+    <a asp-action="Index" class="button">Voltar a lista</a>
+</div>

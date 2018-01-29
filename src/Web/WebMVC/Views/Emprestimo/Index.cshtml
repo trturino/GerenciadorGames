@@ -1,0 +1,47 @@
+﻿@using trturino.GerenciadorGames.WebApps.WebMVC.Models
+@model IEnumerable<EmprestimoViewModel>
+
+@{
+    ViewData["Titulo"] = "Emprestimos";
+}
+<!-- Header -->
+<header id="header">
+    <a href="#" class="logo"><strong>Emprestimos</strong></a>
+    <ul class="icons">
+        <li><a asp-action="Novo" class="icon fa-plus"><span class="label">Adicionar</span></a></li>
+    </ul>
+</header>
+<section>
+    <div class="box alt">
+        <div class="row 50% uniform">
+            @foreach (var emprestimoViewModel in Model)
+            {
+                <div class="4u">
+                    <div class="box disabled">
+                        <h3>@emprestimoViewModel.GameNome</h3>
+                        <p>
+                            <span class="icon fa-user"></span>
+                            <span>@emprestimoViewModel.AmigoNome</span>
+                        </p>
+                        <p>
+                            <span class="icon fa-calendar"></span>
+                            <span>@emprestimoViewModel.DataDoEmprestimo.ToShortDateString()</span>
+                        </p>
+                        <ul class="actions">
+                            @if (!emprestimoViewModel.Devolvido)
+                            {
+                                <li><a href="@Url.Action("Editar", "Emprestimo", new {emprestimoViewModel.Id})" class="button small">Editar</a></li>
+                                <li><a href="@Url.Action("Devolver", "Emprestimo", new {emprestimoViewModel.Id})" class="button special small">Devolver</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="#" class="button small disabled">Editar</a></li>
+                                <li><a href="#" class="button special small disabled">Devolver</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

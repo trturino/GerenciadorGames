@@ -1,0 +1,28 @@
+﻿@using trturino.GerenciadorGames.WebApps.WebMVC.Models
+@{
+    ViewData["Titulo"] = "Amigos";
+}
+<!-- Header -->
+<header id="header">
+    <a href="#" class="logo"><strong>Amigos</strong></a>
+    <ul class="icons">
+        <li><a asp-action="Novo" class="icon fa-plus"><span class="label">Adicionar</span></a></li>
+    </ul>
+</header>
+<section>
+    <div class="posts">
+        @foreach (var amigoViewModel in Model)
+        {
+            <article>
+                <h3>@amigoViewModel.Nome</h3>
+                <p>
+                    <span class="icon fa-phone"></span>
+                    <span>@amigoViewModel.Telefone</span>
+                </p>
+                <ul class="actions">
+                    <li><a href="@Url.Action("Editar", "Amigo", new {amigoViewModel.Id})" class="button">Editar</a></li>
+                </ul>
+            </article>
+        }
+    </div>
+</section>

@@ -1,13 +1,34 @@
 ﻿using System.Diagnostics;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using trturino.GerenciadorGames.WebApps.WebMVC.Models;
+using trturino.GerenciadorGames.WebApps.WebMVC.Services;
 
 namespace trturino.GerenciadorGames.WebApps.WebMVC.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly IEmprestimoService _emprestimoService;
+        private readonly IAmigoService _amigoService;
+        private readonly IGameService _gameService;
+
+        public HomeController(
+            IEmprestimoService emprestimoService,
+            IAmigoService amigoService,
+            IGameService gameService
+            )
         {
+            _emprestimoService = emprestimoService;
+            _amigoService = amigoService;
+            _gameService = gameService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            ViewBag.Emprestimos = await _emprestimoService.GetAll();
+            ViewBag.Games = await _gameService.GetAll();
+            ViewBag.Amigos = await _amigoService.GetAll();
+
             return View();
         }
 

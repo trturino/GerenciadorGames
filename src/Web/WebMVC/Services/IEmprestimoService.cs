@@ -9,5 +9,7 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Services
         Task<IEnumerable<EmprestimoViewModel>> GetAllByAmigo(int idAmigo);
 
         Task<IEnumerable<EmprestimoViewModel>> GetAllByGame(int idGame);
+
+        Task Devolver(int idEmprestimo);
     }
 }
