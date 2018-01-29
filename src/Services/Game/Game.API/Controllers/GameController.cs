@@ -20,7 +20,6 @@ namespace trturino.GerenciadorGames.Services.Game.API.Controllers
         }
 
         [HttpGet]
-        [Route("[action]")]
         [ProducesResponseType(typeof(List<Model.Game>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get()
         {
@@ -30,7 +29,7 @@ namespace trturino.GerenciadorGames.Services.Game.API.Controllers
         }
 
         [HttpGet]
-        [Route("[action]/disponiveis")]
+        [Route("disponiveis")]
         [ProducesResponseType(typeof(List<Model.Game>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetDisponiveis()
         {
@@ -40,7 +39,7 @@ namespace trturino.GerenciadorGames.Services.Game.API.Controllers
         }
 
         [HttpGet]
-        [Route("[action]/:id")]
+        [Route("{id}")]
         [ProducesResponseType(typeof(Model.Game), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Get(int id)
@@ -56,7 +55,6 @@ namespace trturino.GerenciadorGames.Services.Game.API.Controllers
         }
 
         [HttpPost]
-        [Route("[action]")]
         [ProducesResponseType(typeof(API.Model.Game), (int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Post([FromBody] Model.Game amigo)
@@ -70,7 +68,6 @@ namespace trturino.GerenciadorGames.Services.Game.API.Controllers
         }
 
         [HttpPut]
-        [Route("[action]")]
         [ProducesResponseType(typeof(Model.Game), (int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Put([FromBody] Model.Game amigo)

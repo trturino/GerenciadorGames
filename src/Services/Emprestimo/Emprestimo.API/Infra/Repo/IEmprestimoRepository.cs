@@ -14,5 +14,9 @@ namespace trturino.GerenciadorGames.Services.Emprestimo.API.Infra.Repo
         Task<IEnumerable<Model.Emprestimo>> GetTodosAsync();
 
         Task<Model.Emprestimo> UpdateAsync(Model.Emprestimo amigo);
+
+        Task<IEnumerable<Model.Emprestimo>> GetByAmigoId(int id);
+
+        Task<IEnumerable<Model.Emprestimo>> GetByGameId(int id);
     }
 }

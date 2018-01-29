@@ -21,7 +21,6 @@ namespace trturino.GerenciadorGames.Services.API.Controllers
         }
 
         [HttpGet]
-        [Route("[action]")]
         [ProducesResponseType(typeof(List<Amigo>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get()
         {
@@ -31,7 +30,7 @@ namespace trturino.GerenciadorGames.Services.API.Controllers
         }
 
         [HttpGet]
-        [Route("[action]/:id")]
+        [Route("{id}")]
         [ProducesResponseType(typeof(Amigo), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Get(int id)
@@ -47,7 +46,6 @@ namespace trturino.GerenciadorGames.Services.API.Controllers
         }
 
         [HttpPost]
-        [Route("[action]")]
         [ProducesResponseType(typeof(Amigo), (int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Post([FromBody] Amigo amigo)
@@ -61,7 +59,6 @@ namespace trturino.GerenciadorGames.Services.API.Controllers
         }
 
         [HttpPut]
-        [Route("[action]")]
         [ProducesResponseType(typeof(Amigo), (int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Put([FromBody] Amigo amigo)

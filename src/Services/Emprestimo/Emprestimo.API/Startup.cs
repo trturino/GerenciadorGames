@@ -129,7 +129,7 @@ namespace trturino.GerenciadorGames.Services.Emprestimo.API
 
             app.UseCors("CorsPolicy");
 
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc();
 
             app.UseSwagger()
                 .UseSwaggerUI(c =>

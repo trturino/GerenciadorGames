@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -60,6 +61,20 @@ namespace trturino.GerenciadorGames.Services.Emprestimo.API.Infra.Repo
             await _emprestimoContext.SaveChangesAsync();
 
             return await GetAsync(amigo.Id);
+        }
+
+        public async Task<IEnumerable<Model.Emprestimo>> GetByAmigoId(int id)
+        {
+            var amigos = await _emprestimoContext.Emprestimos.AsNoTracking().Where(x => x.AmigoId == id).ToListAsync();
+
+            return amigos;
+        }
+
+        public async Task<IEnumerable<Model.Emprestimo>> GetByGameId(int id)
+        {
+            var amigos = await _emprestimoContext.Emprestimos.AsNoTracking().Where(x => x.GameId == id).ToListAsync();
+
+            return amigos;
         }
     }
 }

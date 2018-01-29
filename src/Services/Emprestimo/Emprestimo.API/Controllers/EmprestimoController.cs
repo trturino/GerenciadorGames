@@ -10,44 +10,53 @@ namespace trturino.GerenciadorGames.Services.Emprestimo.API.Controllers
     [Route("api/v1/[controller]")]
     public class EmprestimoController : Controller
     {
-        private readonly IEmprestimoRepository _gameRepository;
+        private readonly IEmprestimoRepository _emprestimoRepository;
 
         public EmprestimoController(
-            IEmprestimoRepository gameRepository
+            IEmprestimoRepository emprestimoRepository
         )
         {
-            _gameRepository = gameRepository;
+            _emprestimoRepository = emprestimoRepository;
         }
 
         [HttpGet]
-        [Route("[action]")]
-        [ProducesResponseType(typeof(List<Model.Game>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(List<Model.Emprestimo>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get()
         {
-            var itens = await _gameRepository.GetTodosAsync();
+            var itens = await _emprestimoRepository.GetTodosAsync();
 
             return Ok(itens);
         }
 
         [HttpGet]
-        [Route("[action]/disponiveis")]
-        [ProducesResponseType(typeof(List<Model.Game>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetDisponiveis()
+        [Route("amigo/{id}")]
+        [ProducesResponseType(typeof(List<Model.Emprestimo>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetByAmigo(int id)
         {
-            var itens = await _gameRepository.GetDisponiveisAsync();
+            var itens = await _emprestimoRepository.GetByAmigoId(id);
 
             return Ok(itens);
         }
 
         [HttpGet]
-        [Route("[action]/:id")]
-        [ProducesResponseType(typeof(Model.Game), (int)HttpStatusCode.OK)]
+        [Route("game/{id}")]
+        [ProducesResponseType(typeof(List<Model.Emprestimo>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetByGameId(int id)
+        {
+            var itens = await _emprestimoRepository.GetByGameId(id);
+
+            return Ok(itens);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        [ProducesResponseType(typeof(Model.Emprestimo), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Get(int id)
         {
-            var item = await _gameRepository.GetAsync(id);
+            var item = await _emprestimoRepository.GetAsync(id);
 
-            if (item == default(Model.Game))
+            if (item == default(Model.Emprestimo))
             {
                 return NotFound();
             }
@@ -56,29 +65,27 @@ namespace trturino.GerenciadorGames.Services.Emprestimo.API.Controllers
         }
 
         [HttpPost]
-        [Route("[action]")]
-        [ProducesResponseType(typeof(API.Model.Game), (int)HttpStatusCode.Accepted)]
+        [ProducesResponseType(typeof(API.Model.Emprestimo), (int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Post([FromBody] Model.Game amigo)
+        public async Task<IActionResult> Post([FromBody] Model.Emprestimo amigo)
         {
-            if (amigo == default(API.Model.Game))
+            if (amigo == default(API.Model.Emprestimo))
                 return BadRequest();
 
-            var item = await _gameRepository.AddAsync(amigo);
+            var item = await _emprestimoRepository.AddAsync(amigo);
 
             return Accepted(item);
         }
 
         [HttpPut]
-        [Route("[action]")]
-        [ProducesResponseType(typeof(Model.Game), (int)HttpStatusCode.Accepted)]
+        [ProducesResponseType(typeof(Model.Emprestimo), (int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Put([FromBody] Model.Game amigo)
+        public async Task<IActionResult> Put([FromBody] Model.Emprestimo amigo)
         {
-            if (amigo == default(API.Model.Game))
+            if (amigo == default(API.Model.Emprestimo))
                 return BadRequest();
 
-            var item = await _gameRepository.UpdateAsync(amigo);
+            var item = await _emprestimoRepository.UpdateAsync(amigo);
 
             return Accepted(item);
         }
