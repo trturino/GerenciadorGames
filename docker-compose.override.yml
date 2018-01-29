@@ -5,11 +5,12 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
+    ports:
       - "5000:80"
 
   amigo.api:
     environment:
-      - ConnectionString=${ESHOP_AZURE_CATALOG_DB:-Server=sql.data;Database=Microsoft.eShopOnContainers.Services.CatalogDb;User Id=sa;Password=Pass@word}
+      - ConnectionString=${DB:-Server=sql.data;Database=trtutino.amigodb;User Id=sa;Password=Pass@word}
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "5001:80"
@@ -17,7 +18,7 @@ services:
 
   emprestimo.api:
     environment:
-      - ConnectionString=${ESHOP_AZURE_CATALOG_DB:-Server=sql.data;Database=Microsoft.eShopOnContainers.Services.CatalogDb;User Id=sa;Password=Pass@word}
+      - ConnectionString=${DB:-Server=sql.data;Database=trturino.emprestimodb;User Id=sa;Password=Pass@word}
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "5002:80"
@@ -25,7 +26,7 @@ services:
 
   game.api:
     environment:
-      - ConnectionString=${ESHOP_AZURE_CATALOG_DB:-Server=sql.data;Database=Microsoft.eShopOnContainers.Services.CatalogDb;User Id=sa;Password=Pass@word}
+      - ConnectionString=${DB:-Server=sql.data;Database=trturino.gamedb;User Id=sa;Password=Pass@word}
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "5003:80"
@@ -33,7 +34,6 @@ services:
 
   identity.api:
     environment:
-      - ConnectionString=${ESHOP_AZURE_CATALOG_DB:-Server=sql.data;Database=Microsoft.eShopOnContainers.Services.CatalogDb;User Id=sa;Password=Pass@word}
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "5004:80"

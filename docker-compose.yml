@@ -13,7 +13,7 @@ services:
     image: amigo.api
     build:
       context: .
-      dockerfile: src/Services/Emprestimo/Amigo.API/Dockerfile
+      dockerfile: src/Services/Amigo/Amigo.API/Dockerfile
 
 
   emprestimo.api:
@@ -27,7 +27,7 @@ services:
     image: game.api
     build:
       context: .
-      dockerfile: Gsrc/Services/Emprestimo/Game.API/Dockerfile
+      dockerfile: src/Services/Game/Game.API/Dockerfile
 
 
   identity.api:

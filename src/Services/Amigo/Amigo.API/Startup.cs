@@ -1,4 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,6 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using trturino.GerenciadorGames.Services.API.Infra.Filters;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Collections.Generic;
+using System.Reflection;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using trturino.GerenciadorGames.Services.API.Infra;
 
 namespace trturino.GerenciadorGames.Services.API
 {
@@ -26,6 +31,27 @@ namespace trturino.GerenciadorGames.Services.API
                 options.Filters.Add(typeof(ValidarModelStateFilter));
 
             }).AddControllersAsServices();
+
+            services.AddDbContext<AmigoContext>(options =>
+            {
+                options.UseSqlServer(Configuration["ConnectionString"],
+                    sqlServerOptionsAction: sqlOptions =>
+                    {
+                        sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                        sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+                    });
+
+                options.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+            });
 
             ConfiguraAuthService(services);
         }

@@ -45,6 +45,11 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Services
             return Task.FromResult(_emprestimos.Where(x => x.GameId == idGame));
         }
 
+        public Task Devolver(int idEmprestimo)
+        {
+            return Task.CompletedTask;
+        }
+
         public Task<EmprestimoViewModel> GetById(int id)
         {
             return Task.FromResult(_emprestimos.FirstOrDefault(x => x.Id == id));
