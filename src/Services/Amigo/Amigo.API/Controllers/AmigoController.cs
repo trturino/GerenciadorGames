@@ -9,7 +9,6 @@ namespace trturino.GerenciadorGames.Services.API.Controllers
 {
     [Produces("application/json")]
     [Route("api/v1/[controller]")]
-    [Authorize]
     public class AmigoController : Controller
     {
         private readonly IAmigoRespository _amigoRespository;
@@ -47,7 +46,7 @@ namespace trturino.GerenciadorGames.Services.API.Controllers
             return Ok(item);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("[action]")]
         [ProducesResponseType(typeof(Amigo), (int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -61,7 +60,7 @@ namespace trturino.GerenciadorGames.Services.API.Controllers
             return Accepted(item);
         }
 
-        [HttpGet]
+        [HttpPut]
         [Route("[action]")]
         [ProducesResponseType(typeof(Amigo), (int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]

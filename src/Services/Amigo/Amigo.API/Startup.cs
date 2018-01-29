@@ -9,9 +9,13 @@ using trturino.GerenciadorGames.Services.API.Infra.Filters;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Collections.Generic;
 using System.Reflection;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using trturino.GerenciadorGames.Services.API.Infra;
+using trturino.GerenciadorGames.Services.API.Model;
+using trturino.GerenciadorGames.Services.API.Infra.Repo;
 
 namespace trturino.GerenciadorGames.Services.API
 {
@@ -24,7 +28,7 @@ namespace trturino.GerenciadorGames.Services.API
 
         public IConfiguration Configuration { get; }
 
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(options =>
             {
@@ -44,6 +48,8 @@ namespace trturino.GerenciadorGames.Services.API
                 options.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
             });
 
+            services.AddTransient<IAmigoRespository, AmigoRepository>();
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -54,6 +60,10 @@ namespace trturino.GerenciadorGames.Services.API
             });
 
             ConfiguraAuthService(services);
+
+            var container = new ContainerBuilder();
+            container.Populate(services);
+            return new AutofacServiceProvider(container.Build());
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -63,7 +73,21 @@ namespace trturino.GerenciadorGames.Services.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
+            var pathBase = Configuration["PATH_BASE"];
+            if (!string.IsNullOrEmpty(pathBase))
+            {
+                app.UsePathBase(pathBase);
+            }
+
+            app.UseCors("CorsPolicy");
+
+            app.UseMvcWithDefaultRoute();
+
+            app.UseSwagger()
+                .UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "Amigo.API V1");
+                });
             ConfiguraAuth(app);
         }
 
