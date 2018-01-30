@@ -8,7 +8,7 @@ using trturino.GerenciadorGames.WebApps.WebMVC.Services;
 namespace trturino.GerenciadorGames.WebApps.WebMVC.Controllers
 {
     [Route("amigo")]
-    [Authorize]
+    //[Authorize]
     public class AmigoController : Controller
     {
         private readonly IAmigoService _amigoService;
@@ -57,6 +57,9 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return View(amigoViewModel);
+
                 await _amigoService.Edit(amigoViewModel);
 
                 return RedirectToAction(nameof(Index));
@@ -81,6 +84,9 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return View(amigoViewModel);
+
                 await _amigoService.Add(amigoViewModel);
 
                 return RedirectToAction(nameof(Index));

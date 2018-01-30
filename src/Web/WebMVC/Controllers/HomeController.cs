@@ -5,7 +5,7 @@ using trturino.GerenciadorGames.WebApps.WebMVC.Services;
 
 namespace trturino.GerenciadorGames.WebApps.WebMVC.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class HomeController : Controller
     {
         private readonly IEmprestimoService _emprestimoService;

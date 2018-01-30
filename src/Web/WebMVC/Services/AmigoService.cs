@@ -18,12 +18,14 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Services
 
         public AmigoService(
             IOptionsSnapshot<AppSettings> settings,
-            IHttpClient apiClient
+            IHttpClient apiClient,
+            IHttpContextAccessor httpContextAccesor
             )
         {
             _settings = settings;
-            _enderecoRemoto = $"{_settings.Value.AmigoUrl}/api/v1/amigo/";
+            _enderecoRemoto = $"{_settings.Value.AmigoUrl}/api/v1/amigo";
             _apiClient = apiClient;
+            _httpContextAccesor = httpContextAccesor;
         }
 
         public async Task<AmigoViewModel> Add(AmigoViewModel model)
@@ -31,7 +33,7 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Services
             var amigoUrl = API.Amigo.PostAmigo(_enderecoRemoto);
 
             var authorizationToken = await GetUserTokenAsync();
-            var response = await _apiClient.PostAsync(amigoUrl, authorizationToken);
+            var response = await _apiClient.PostAsync(amigoUrl, model, authorizationToken);
 
             response.EnsureSuccessStatusCode();
 

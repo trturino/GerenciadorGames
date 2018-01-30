@@ -8,7 +8,7 @@ using trturino.GerenciadorGames.WebApps.WebMVC.Services;
 namespace trturino.GerenciadorGames.WebApps.WebMVC.Controllers
 {
     [Route("game")]
-    [Authorize]
+    //[Authorize]
     public class GameController : Controller
     {
         private readonly IGameService _gameService;

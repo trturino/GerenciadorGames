@@ -8,8 +8,8 @@ using trturino.GerenciadorGames.Services.Game.API.Infra.Repo;
 namespace trturino.GerenciadorGames.Services.Game.API.Controllers
 {
     [Produces("application/json")]
-    [Route("api/v1/[controller]")]
-    [Authorize]
+    [Route("api/v1/game")]
+    //[Authorize]
     public class GameController : Controller
     {
         private readonly IGameRepository _gameRepository;

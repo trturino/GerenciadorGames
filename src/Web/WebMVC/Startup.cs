@@ -25,10 +25,20 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC
 
             services.Configure<AppSettings>(Configuration);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddTransient<IHttpClient, AppHttpClient>();
+            
             services.AddTransient<IAmigoService, AmigoService>();
             services.AddTransient<IGameService, GameService>();
             services.AddTransient<IEmprestimoService, EmprestimoService>();
+
+            services.AddSingleton<IAppHttpClientFactory, AppHttpClientFactory>(sp =>
+            {
+                var httpContextAccessor = sp.GetRequiredService<IHttpContextAccessor>();
+
+                var retryCount = 6;
+                var exceptionsAllowedBeforeBreaking = 5;
+                return new AppHttpClientFactory(httpContextAccessor, exceptionsAllowedBeforeBreaking, retryCount);
+            });
+            services.AddSingleton<IHttpClient, AppHttpClient>(sp => sp.GetService<IAppHttpClientFactory>().CreateHttpClient());
 
             var identityUrl = Configuration.GetValue<string>("IdentityUrl");
             var callBackUrl = Configuration.GetValue<string>("CallBackUrl");

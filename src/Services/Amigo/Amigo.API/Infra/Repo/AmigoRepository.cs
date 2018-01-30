@@ -16,6 +16,8 @@ namespace trturino.GerenciadorGames.Services.API.Infra.Repo
 
         public async Task<Amigo> AddAmigoAsync(Amigo amigo)
         {
+            var id = await _amigoContext.Amigos.MaxAsync(x => x.Id);
+            amigo.SetId(id);
             _amigoContext.Amigos.Add(amigo);
 
             await _amigoContext.SaveChangesAsync();

@@ -8,7 +8,7 @@ using trturino.GerenciadorGames.WebApps.WebMVC.Services;
 namespace trturino.GerenciadorGames.WebApps.WebMVC.Controllers
 {
     [Route("emprestimo")]
-    [Authorize]
+    //[Authorize]
     public class EmprestimoController : Controller
     {
         private readonly IAmigoService _amigoService;

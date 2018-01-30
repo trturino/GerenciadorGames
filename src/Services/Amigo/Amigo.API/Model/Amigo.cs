@@ -28,6 +28,12 @@ namespace trturino.GerenciadorGames.Services.API.Model
             return this;
         }
 
+        public Amigo SetId(int id)
+        {
+            Id = id;
+            return this;
+        }
+
         public Amigo SetNome(string nome)
         {
             Nome = nome;

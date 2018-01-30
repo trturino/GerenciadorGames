@@ -8,8 +8,8 @@ using trturino.GerenciadorGames.Services.Emprestimo.API.Infra.Repo;
 namespace trturino.GerenciadorGames.Services.Emprestimo.API.Controllers
 {
     [Produces("application/json")]
-    [Route("api/v1/[controller]")]
-    [Authorize]
+    [Route("api/v1/emprestimo")]
+    //[Authorize]
     public class EmprestimoController : Controller
     {
         private readonly IEmprestimoRepository _emprestimoRepository;

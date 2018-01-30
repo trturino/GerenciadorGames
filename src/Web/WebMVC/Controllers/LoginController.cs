@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace trturino.GerenciadorGames.WebApps.WebMVC.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class LoginController : Controller
     {
         public async Task<IActionResult> Login(string urlRetorno)
