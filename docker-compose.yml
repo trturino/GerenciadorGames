@@ -37,5 +37,5 @@ services:
       dockerfile: src/Services/Identity/Identity.API/Dockerfile
 
   sql.data:
-    image: microsoft/mssql-server-linux:2017-latest
+    image: microsoft/mssql-server-windows-express
 

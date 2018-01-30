@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +29,31 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC
             services.AddTransient<IAmigoService, AmigoService>();
             services.AddTransient<IGameService, GameService>();
             services.AddTransient<IEmprestimoService, EmprestimoService>();
+
+            var identityUrl = Configuration.GetValue<string>("IdentityUrl");
+            var callBackUrl = Configuration.GetValue<string>("CallBackUrl");
+
+            services.AddAuthentication(options => {
+                    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                })
+                .AddCookie()
+                .AddOpenIdConnect(options => {
+                    options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.Authority = identityUrl.ToString();
+                    options.SignedOutRedirectUri = callBackUrl.ToString();
+                    options.ClientId = "mvc";
+                    options.ClientSecret = "secret";
+                    options.ResponseType = "code id_token";
+                    options.SaveTokens = true;
+                    options.GetClaimsFromUserInfoEndpoint = true;
+                    options.RequireHttpsMetadata = false;
+                    options.Scope.Add("openid");
+                    options.Scope.Add("profile");
+                    options.Scope.Add("amigos");
+                    options.Scope.Add("emprestimos");
+                    options.Scope.Add("games");
+                });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

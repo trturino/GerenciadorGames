@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using trturino.GerenciadorGames.Services.Game.API.Infra.Repo;
 
 namespace trturino.GerenciadorGames.Services.Game.API.Controllers
 {
     [Produces("application/json")]
     [Route("api/v1/[controller]")]
+    [Authorize]
     public class GameController : Controller
     {
         private readonly IGameRepository _gameRepository;
@@ -78,6 +80,15 @@ namespace trturino.GerenciadorGames.Services.Game.API.Controllers
             var item = await _gameRepository.UpdateAsync(amigo);
 
             return Accepted(item);
+        }
+
+        [HttpDelete]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _gameRepository.DeleteAsync(id);
+
+            return Accepted();
         }
     }
 }

@@ -8,6 +8,7 @@ services:
       - AmigoUrl=http://amigo.api
       - EmprestimoUrl=http://emprestimo.api
       - GameUrl=http://game.api
+      - identityUrl=http://identity.api
     ports:
       - "5000:80"
 
@@ -15,6 +16,7 @@ services:
     environment:
       - ConnectionString=${DB:-Server=sql.data;Database=trtutino.amigodb;User Id=sa;Password=Pass@word}
       - ASPNETCORE_ENVIRONMENT=Development
+      - identityUrl=http://identity.api
     ports:
       - "5001:80"
 
@@ -23,6 +25,7 @@ services:
     environment:
       - ConnectionString=${DB:-Server=sql.data;Database=trturino.emprestimodb;User Id=sa;Password=Pass@word}
       - ASPNETCORE_ENVIRONMENT=Development
+      - identityUrl=http://identity.api
     ports:
       - "5002:80"
 
@@ -31,12 +34,14 @@ services:
     environment:
       - ConnectionString=${DB:-Server=sql.data;Database=trturino.gamedb;User Id=sa;Password=Pass@word}
       - ASPNETCORE_ENVIRONMENT=Development
+      - identityUrl=http://identity.api
     ports:
       - "5003:80"
 
 
   identity.api:
     environment:
+      - ConnectionString=${DB:-Server=sql.data;Database=trturino.identitydb;User Id=sa;Password=Pass@word} 
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "5004:80"

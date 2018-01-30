@@ -9,6 +9,7 @@ namespace trturino.GerenciadorGames.Services.API.Controllers
 {
     [Produces("application/json")]
     [Route("api/v1/[controller]")]
+    [Authorize]
     public class AmigoController : Controller
     {
         private readonly IAmigoRespository _amigoRespository;
@@ -69,6 +70,15 @@ namespace trturino.GerenciadorGames.Services.API.Controllers
             var item = await _amigoRespository.UpdateAmigoAsync(amigo);
 
             return Accepted(item);
+        }
+
+        [HttpDelete]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _amigoRespository.DeleteAmigoAsync(id);
+
+            return Accepted();
         }
     }
 }

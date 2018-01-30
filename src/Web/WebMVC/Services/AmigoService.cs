@@ -30,37 +30,42 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Services
         {
             var amigoUrl = API.Amigo.PostAmigo(_enderecoRemoto);
 
-            //var authorizationToken = await GetUserTokenAsync();
-            var dados = await _apiClient.GetStringAsync(amigoUrl);
+            var authorizationToken = await GetUserTokenAsync();
+            var response = await _apiClient.PostAsync(amigoUrl, authorizationToken);
 
-            var response = JsonConvert.DeserializeObject<AmigoViewModel>(dados);
+            response.EnsureSuccessStatusCode();
 
-            return response;
+            return model;
         }
 
-        public Task<bool> Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            return Task.FromResult(true);
+            var amigoUrl = API.Amigo.DeleteAmigo(_enderecoRemoto, id);
+
+            var authorizationToken = await GetUserTokenAsync();
+            var response = await _apiClient.DeleteAsync(amigoUrl, authorizationToken);
+
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<AmigoViewModel> Edit(AmigoViewModel model)
         {
             var amigoUrl = API.Amigo.PutAmigo(_enderecoRemoto);
 
-            //var authorizationToken = await GetUserTokenAsync();
-            var dados = await _apiClient.GetStringAsync(amigoUrl);
+            var authorizationToken = await GetUserTokenAsync();
+            var response = await _apiClient.PutAsync(amigoUrl, model, authorizationToken);
 
-            var response = JsonConvert.DeserializeObject<AmigoViewModel>(dados);
+            response.EnsureSuccessStatusCode();
 
-            return response;
+            return model;
         }
 
         public async Task<IEnumerable<AmigoViewModel>> GetAll()
         {
             var amigoUrl = API.Amigo.GetAmigo(_enderecoRemoto);
 
-            //var authorizationToken = await GetUserTokenAsync();
-            var dataString = await _apiClient.GetStringAsync(amigoUrl);
+            var authorizationToken = await GetUserTokenAsync();
+            var dataString = await _apiClient.GetStringAsync(amigoUrl, authorizationToken);
 
             var response = JsonConvert.DeserializeObject<IEnumerable<AmigoViewModel>>(dataString);
 
@@ -71,8 +76,8 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Services
         {
             var amigoUrl = API.Amigo.GetAmigoById(_enderecoRemoto, id);
 
-            //var authorizationToken = await GetUserTokenAsync();
-            var dataString = await _apiClient.GetStringAsync(amigoUrl);
+            var authorizationToken = await GetUserTokenAsync();
+            var dataString = await _apiClient.GetStringAsync(amigoUrl, authorizationToken);
 
             var response = JsonConvert.DeserializeObject<AmigoViewModel>(dataString);
 

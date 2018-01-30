@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using trturino.GerenciadorGames.WebApps.WebMVC.Models;
 using trturino.GerenciadorGames.WebApps.WebMVC.Services;
@@ -7,6 +8,7 @@ using trturino.GerenciadorGames.WebApps.WebMVC.Services;
 namespace trturino.GerenciadorGames.WebApps.WebMVC.Controllers
 {
     [Route("emprestimo")]
+    [Authorize]
     public class EmprestimoController : Controller
     {
         private readonly IAmigoService _amigoService;

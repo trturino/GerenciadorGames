@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using trturino.GerenciadorGames.Services.Emprestimo.API.Infra.Repo;
 
 namespace trturino.GerenciadorGames.Services.Emprestimo.API.Controllers
 {
     [Produces("application/json")]
     [Route("api/v1/[controller]")]
+    [Authorize]
     public class EmprestimoController : Controller
     {
         private readonly IEmprestimoRepository _emprestimoRepository;
