@@ -1,9 +1,10 @@
-﻿using System.IO;
-using IdentityServer4.EntityFramework.DbContexts;
+﻿using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using System.IO;
 using trturino.GerenciadorGames.Services.Identity.API.Data;
 using trturino.GerenciadorGames.Services.Identity.API.Extensions;
 
@@ -22,6 +23,13 @@ namespace trturino.GerenciadorGames.Services.Identity.API
 
                     new AppDbContextSeed()
                         .SeedAsync(context, env, settings)
+                        .Wait();
+                }).MigrateDbContext<ConfigurationDbContext>((context, services) =>
+                {
+                    var configuration = services.GetService<IConfiguration>();
+
+                    new ConfigurationDbContextSeed()
+                        .SeedAsync(context, configuration)
                         .Wait();
                 }).Run();
         }

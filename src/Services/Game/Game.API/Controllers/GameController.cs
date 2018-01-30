@@ -57,11 +57,11 @@ namespace trturino.GerenciadorGames.Services.Game.API.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(API.Model.Game), (int)HttpStatusCode.Accepted)]
+        [ProducesResponseType(typeof(Model.Game), (int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Post([FromBody] Model.Game amigo)
         {
-            if (amigo == default(API.Model.Game))
+            if (amigo == default(Model.Game))
                 return BadRequest();
 
             var item = await _gameRepository.AddAsync(amigo);
@@ -74,7 +74,7 @@ namespace trturino.GerenciadorGames.Services.Game.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Put([FromBody] Model.Game amigo)
         {
-            if (amigo == default(API.Model.Game))
+            if (amigo == default(Model.Game))
                 return BadRequest();
 
             var item = await _gameRepository.UpdateAsync(amigo);

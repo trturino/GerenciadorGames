@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 
-namespace trturino.GerenciadorGames.Services.Game.API.Certificate
+namespace trturino.GerenciadorGames.Services.Identity.API.Certificate
 {
     static class Certificate
     {
@@ -11,7 +11,7 @@ namespace trturino.GerenciadorGames.Services.Game.API.Certificate
             var assembly = typeof(Certificate).GetTypeInfo().Assembly;
             var names = assembly.GetManifestResourceNames();
 
-            using (var stream = assembly.GetManifestResourceStream("trturino.GerenciadorGames.Services.Game.API.Certificate.idsrv3test.pfx"))
+            using (var stream = assembly.GetManifestResourceStream("trturino.GerenciadorGames.Services.Identity.API.Certificate.idsrv3test.pfx"))
             {
                 return new X509Certificate2(ReadStream(stream), "idsrv3test");
             }

@@ -110,8 +110,9 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Controllers
         {
             try
             {
-                await _emprestimoService.Devolver(id);
-
+                var emprestimo = await _emprestimoService.GetById(id);
+                emprestimo.Devolvido = true;
+                await _emprestimoService.Edit(emprestimo);
             }
             catch (Exception)
             {

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Reflection;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using IdentityServer4.AspNetIdentity;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Builder;
@@ -10,7 +12,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
-using trturino.GerenciadorGames.Services.Game.API.Certificate;
 using trturino.GerenciadorGames.Services.Identity.API.Data;
 using trturino.GerenciadorGames.Services.Identity.API.Models;
 using trturino.GerenciadorGames.Services.Identity.API.Services;
@@ -38,7 +39,7 @@ namespace trturino.GerenciadorGames.Services.Identity.API
 
             services.AddIdentity<Usuario, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders();    
 
             services.Configure<AppSettings>(Configuration);
 
@@ -51,7 +52,7 @@ namespace trturino.GerenciadorGames.Services.Identity.API
 
             // Adds IdentityServer
             services.AddIdentityServer(x => x.IssuerUri = "null")
-                .AddSigningCredential(Certificate.Get())
+                .AddSigningCredential(Certificate.Certificate.Get())
                 .AddAspNetIdentity<Usuario>()
                 .AddConfigurationStore(options =>
                 {
@@ -80,7 +81,6 @@ namespace trturino.GerenciadorGames.Services.Identity.API
             return new AutofacServiceProvider(container.Build());
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
@@ -102,21 +102,19 @@ namespace trturino.GerenciadorGames.Services.Identity.API
 
             app.UseStaticFiles();
 
-
             app.Use(async (context, next) =>
             {
                 context.Response.Headers.Add("Content-Security-Policy", "script-src 'unsafe-inline'");
                 await next();
             });
 
-            // Adds IdentityServer
             app.UseIdentityServer();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Account}/{action=Login}/{id?}");
             });
         }
     }

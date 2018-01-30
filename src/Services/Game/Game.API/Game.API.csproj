@@ -7,7 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Certificate\idsrv3test.pfx" />
+    <Compile Remove="Certificate\**" />
+    <Content Remove="Certificate\**" />
+    <EmbeddedResource Remove="Certificate\**" />
+    <None Remove="Certificate\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,7 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
     <PackageReference Include="Polly" Version="5.7.0" />
@@ -26,10 +29,6 @@
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Certificate\idsrv3test.pfx" />
   </ItemGroup>
 
 </Project>
