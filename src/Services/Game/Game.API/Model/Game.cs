@@ -22,6 +22,12 @@ namespace trturino.GerenciadorGames.Services.Game.API.Model
             private set;
         }
 
+        public Game SetId(int id)
+        {
+            Id = id;
+            return this;
+        }
+
         public string Nome
         {
             get;

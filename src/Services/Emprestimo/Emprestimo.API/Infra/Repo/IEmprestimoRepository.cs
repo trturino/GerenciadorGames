@@ -5,7 +5,7 @@ namespace trturino.GerenciadorGames.Services.Emprestimo.API.Infra.Repo
 {
     public interface IEmprestimoRepository
     {
-        Task<Model.Emprestimo> AddAsync(Model.Emprestimo amigo);
+        Task<Model.Emprestimo> AddAsync(Model.Emprestimo emprestimo);
 
         Task<bool> DeleteAsync(int id);
 
@@ -13,7 +13,7 @@ namespace trturino.GerenciadorGames.Services.Emprestimo.API.Infra.Repo
 
         Task<IEnumerable<Model.Emprestimo>> GetTodosAsync();
 
-        Task<Model.Emprestimo> UpdateAsync(Model.Emprestimo amigo);
+        Task<Model.Emprestimo> UpdateAsync(Model.Emprestimo emprestimo);
 
         Task<IEnumerable<Model.Emprestimo>> GetByAmigoId(int id);
 

@@ -21,7 +21,7 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Services
             IHttpContextAccessor httpContextAccesor
         )
         {
-            _enderecoRemoto = $"{settings.Value.GameUrl}/api/v1/game/";
+            _enderecoRemoto = $"{settings.Value.GameUrl}/api/v1/game";
             _apiClient = apiClient;
             _httpContextAccesor = httpContextAccesor;
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace trturino.GerenciadorGames.WebApps.WebMVC.Models
 {
@@ -6,12 +7,16 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Models
     {
         public int Id { get; set; }
 
+        [Range(1, Int32.MaxValue)]
         public int GameId { get; set; }
 
+        [Required]
         public string GameNome { get; set; }
 
+        [Range(1, Int32.MaxValue)]
         public int AmigoId { get; set; }
 
+        [Required]
         public string AmigoNome { get; set; }
 
         public bool Devolvido { get; set; }

@@ -57,6 +57,10 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Controllers
         {
             try
             {
+
+                if (!ModelState.IsValid)
+                    return View(gameViewModel);
+
                 await _gameService.Edit(gameViewModel);
 
                 return RedirectToAction(nameof(Index));
@@ -81,6 +85,10 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return View(gameViewModel);
+
+                gameViewModel.Disponivel = true;
                 await _gameService.Add(gameViewModel);
 
                 return RedirectToAction(nameof(Index));

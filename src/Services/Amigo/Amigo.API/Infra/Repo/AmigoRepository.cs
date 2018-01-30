@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using trturino.GerenciadorGames.Services.API.Model;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ namespace trturino.GerenciadorGames.Services.API.Infra.Repo
 
         public async Task<Amigo> AddAmigoAsync(Amigo amigo)
         {
-            var id = await _amigoContext.Amigos.MaxAsync(x => x.Id);
+            var id = _amigoContext.Amigos.Select(x => x.Id).ToList().Max() + 1;
             amigo.SetId(id);
             _amigoContext.Amigos.Add(amigo);
 

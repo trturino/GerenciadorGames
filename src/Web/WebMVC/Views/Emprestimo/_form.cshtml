@@ -5,10 +5,23 @@
 <div class="row uniform">
     <div class="12u$">
         <div class="select-wrapper">
-            <select asp-for="GameId"
+            <select asp-for="GameId" class="gameId"
                     asp-items="Model.GamesDisponiveis">
                 <option value="-1">- Games -</option>
             </select>
+            <span asp-validation-for="GameId" class="code"></span>
+            <input asp-for="GameNome" type="hidden" id="gameNome" />
+        </div>
+    </div>
+    
+    <div class="12u$">
+        <div class="select-wrapper">
+            <select asp-for="AmigoId" class="amigoId"
+                    asp-items="Model.Amigos">
+                <option value="-1">- Amigos -</option>
+            </select>
+            <span asp-validation-for="AmigoId" class="code"></span>
+            <input asp-for="AmigoNome" type="hidden" id="amigoNome" />
         </div>
     </div>
     
@@ -18,3 +31,15 @@
         </ul>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).read(function () {
+        $(".gameId").change(function() {
+            $("#gameNome").val($(this).find(":selected").text());
+        });
+
+        $(".amigoId").change(function () {
+            $("#amigoNome").val($(this).find(":selected").text());
+        });
+    });
+</script>

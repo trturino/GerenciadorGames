@@ -19,6 +19,12 @@ namespace trturino.GerenciadorGames.Services.Emprestimo.API.Model
             DataDoEmprestimo = dataDoEmprestimo;
         }
 
+        public Emprestimo SetId(int id)
+        {
+            Id = id;
+            return this;
+        }
+
         public int Id { get; private set; }
 
         public int GameId { get; private set; }

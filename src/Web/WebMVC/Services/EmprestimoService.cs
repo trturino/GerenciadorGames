@@ -24,7 +24,7 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Services
         )
         {
             _settings = settings;
-            _enderecoRemoto = $"{_settings.Value.EmprestimoUrl}/api/v1/emprestimo/";
+            _enderecoRemoto = $"{_settings.Value.EmprestimoUrl}/api/v1/emprestimo";
             _apiClient = apiClient;
             _httpContextAccesor = httpContextAccesor ?? throw new ArgumentNullException(nameof(httpContextAccesor));
         }

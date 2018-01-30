@@ -66,6 +66,9 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return View(await GetForm(emprestimoViewModel));
+
                 await _emprestimoService.Edit(emprestimoViewModel);
 
                 return RedirectToAction(nameof(Index));
@@ -88,11 +91,14 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Controllers
 
         [Route("novo")]
         [HttpPost]
-        public async Task<IActionResult> Novo(EmprestimoViewModel gameViewModel)
+        public async Task<IActionResult> Novo(EmprestimoViewModel emprestimoViewModel)
         {
             try
             {
-                await _emprestimoService.Add(gameViewModel);
+                if (!ModelState.IsValid)
+                    return View(await GetForm(emprestimoViewModel));
+
+                await _emprestimoService.Add(emprestimoViewModel);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -113,6 +119,11 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Controllers
                 var emprestimo = await _emprestimoService.GetById(id);
                 emprestimo.Devolvido = true;
                 await _emprestimoService.Edit(emprestimo);
+
+                var game = await _gameService.GetById(emprestimo.GameId);
+                game.Disponivel = true;
+                await _gameService.Edit(game);
+
             }
             catch (Exception)
             {
@@ -132,6 +143,12 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Controllers
             var form = EmprestimoFormViewModel.Clone(emprestimoViewModel);
             form.AddAmigos(await _amigoService.GetAll());
             form.AddGames(await _gameService.GetGamesDisponiveis());
+
+            if (form.GameId > 0)
+                form.AddGame(new GameViewModel() { Id = form.GameId, Nome = form.AmigoNome});
+
+            if (form.AmigoId > 0)
+                form.AddAmigo(new AmigoViewModel() { Id = form.GameId, Nome = form.AmigoNome });
 
             return form;
         }

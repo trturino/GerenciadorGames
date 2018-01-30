@@ -20,10 +20,20 @@ namespace trturino.GerenciadorGames.WebApps.WebMVC.Models
                 Amigos.Add(new SelectListItem { Value = viewModel.Id.ToString(), Text = viewModel.Nome});
         }
 
+        public void AddAmigo(AmigoViewModel amigoViewModel)
+        {
+            Amigos.Add(new SelectListItem { Value = amigoViewModel.Id.ToString(), Text = amigoViewModel.Nome });
+        }
+
         public void AddGames(IEnumerable<GameViewModel> gameViewModels)
         {
             foreach (var viewModel in gameViewModels)
-                GamesDisponiveis.Add(new SelectListItem { Value = viewModel.Id.ToString(), Text = viewModel.Nome });
+                AddGame(viewModel);
+        }
+
+        public void AddGame(GameViewModel gameViewModels)
+        {
+            GamesDisponiveis.Add(new SelectListItem { Value = gameViewModels.Id.ToString(), Text = gameViewModels.Nome });
         }
 
         public static EmprestimoFormViewModel Clone(EmprestimoViewModel emprestimoViewModel)

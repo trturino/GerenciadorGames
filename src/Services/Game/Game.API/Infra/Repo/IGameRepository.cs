@@ -5,7 +5,7 @@ namespace trturino.GerenciadorGames.Services.Game.API.Infra.Repo
 {
     public interface IGameRepository
     {
-        Task<Model.Game> AddAsync(Model.Game amigo);
+        Task<Model.Game> AddAsync(Model.Game game);
 
         Task<bool> DeleteAsync(int id);
 
@@ -15,6 +15,6 @@ namespace trturino.GerenciadorGames.Services.Game.API.Infra.Repo
 
         Task<IEnumerable<Model.Game>> GetTodosAsync();
 
-        Task<Model.Game> UpdateAsync(Model.Game amigo);
+        Task<Model.Game> UpdateAsync(Model.Game game);
     }
 }

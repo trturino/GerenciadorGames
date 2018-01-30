@@ -15,13 +15,15 @@ namespace trturino.GerenciadorGames.Services.Game.API.Infra.Repo
             _gameContext = gameContext;
         }
 
-        public async Task<Model.Game> AddAsync(Model.Game amigo)
+        public async Task<Model.Game> AddAsync(Model.Game game)
         {
-            _gameContext.Games.Add(amigo);
+            var id = _gameContext.Games.Select(x => x.Id).ToList().Max() + 1;
+            game.SetId(id);
+            _gameContext.Games.Add(game);
 
             await _gameContext.SaveChangesAsync();
 
-            return await GetAsync(amigo.Id);
+            return await GetAsync(game.Id);
         }
 
         public async Task<bool> DeleteAsync(int id)
@@ -57,18 +59,18 @@ namespace trturino.GerenciadorGames.Services.Game.API.Infra.Repo
             return amigos;
         }
 
-        public async Task<Model.Game> UpdateAsync(Model.Game amigo)
+        public async Task<Model.Game> UpdateAsync(Model.Game game)
         {
-            var am = await _gameContext.Games.FirstOrDefaultAsync(x => x.Id == amigo.Id);
+            var am = await _gameContext.Games.FirstOrDefaultAsync(x => x.Id == game.Id);
 
             if (am == default(Model.Game))
                 return default(Model.Game);
 
-            _gameContext.Entry(am).CurrentValues.SetValues(amigo);
+            _gameContext.Entry(am).CurrentValues.SetValues(game);
 
             await _gameContext.SaveChangesAsync();
 
-            return await GetAsync(amigo.Id);
+            return await GetAsync(game.Id);
         }
     }
 }

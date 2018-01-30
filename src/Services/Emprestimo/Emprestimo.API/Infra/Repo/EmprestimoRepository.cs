@@ -14,13 +14,15 @@ namespace trturino.GerenciadorGames.Services.Emprestimo.API.Infra.Repo
             _emprestimoContext = emprestimoContext;
         }
 
-        public async Task<Model.Emprestimo> AddAsync(Model.Emprestimo amigo)
+        public async Task<Model.Emprestimo> AddAsync(Model.Emprestimo emprestimo)
         {
-            _emprestimoContext.Emprestimos.Add(amigo);
+            var id = _emprestimoContext.Emprestimos.Select(x => x.Id).ToList().Max() + 1;
+            emprestimo.SetId(id);
+            _emprestimoContext.Emprestimos.Add(emprestimo);
 
             await _emprestimoContext.SaveChangesAsync();
 
-            return await GetAsync(amigo.Id);
+            return await GetAsync(emprestimo.Id);
         }
 
         public async Task<bool> DeleteAsync(int id)
@@ -49,18 +51,18 @@ namespace trturino.GerenciadorGames.Services.Emprestimo.API.Infra.Repo
             return amigos;
         }
 
-        public async Task<Model.Emprestimo> UpdateAsync(Model.Emprestimo amigo)
+        public async Task<Model.Emprestimo> UpdateAsync(Model.Emprestimo emprestimo)
         {
-            var am = await _emprestimoContext.Emprestimos.FirstOrDefaultAsync(x => x.Id == amigo.Id);
+            var am = await _emprestimoContext.Emprestimos.FirstOrDefaultAsync(x => x.Id == emprestimo.Id);
 
             if (am == default(Model.Emprestimo))
                 return default(Model.Emprestimo);
 
-            _emprestimoContext.Entry(am).CurrentValues.SetValues(amigo);
+            _emprestimoContext.Entry(am).CurrentValues.SetValues(emprestimo);
 
             await _emprestimoContext.SaveChangesAsync();
 
-            return await GetAsync(amigo.Id);
+            return await GetAsync(emprestimo.Id);
         }
 
         public async Task<IEnumerable<Model.Emprestimo>> GetByAmigoId(int id)
